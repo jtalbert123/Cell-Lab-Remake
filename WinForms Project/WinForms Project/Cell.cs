@@ -5,28 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace WinForms_Project
+namespace WinForms_Project.Sim
 {
-    class Cell
+    public interface ICell
     {
-        public PointF Location { get; private set; }
-        public float Mass { get; private set; }
-        public bool Alive { get; private set; }
+        PointF Location { get; }
+        float Mass { get; }
+        bool Alive { get; }
+        CellType Type { get; }
+    }
 
-        public Cell(PointF initialLocation)
+    abstract class Cell : ICell
+    {
+        public PointF Location { get; set; }
+        public float Mass { get; protected set; }
+        public bool Alive { get; protected set; }
+        public abstract CellType Type { get; }
+        public CellMode Mode { get; protected set; }
+
+        public Cell(CellMode mode)
         {
-            Location = initialLocation;
+            Mode = mode;
             Mass = 50;
             Alive = true;
         }
 
-        public void Tick(CellConditions conditions)
+        public virtual void Tick(CellConditions conditions)
         {
             if (!Alive)
             {
                 return;
             }
-            Mass += (conditions.Sunlight - 3) / 10;
+            Mass -= 1f / conditions.Salinity;
             if (Mass > 100)
             {
                 Mass = 100;

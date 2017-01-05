@@ -6,29 +6,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace WinForms_Project
+namespace WinForms_Project.Sim
 {
-    class Simulation
+    public class Simulation
     {
-        public IEnumerable<Cell> Cells { get { return cells; } }
-        public bool Light { get; private set; }
+        public IEnumerable<ICell> Cells { get { return cells; } }
 
         private ISet<Cell> cells;
         private Timer tick;
+        private CellConditions conditions;
 
         public Simulation()
         {
             cells = new HashSet<Cell>();
-            Light = true;
+            conditions = new CellConditions(10, 0, 10);
             tick = new Timer();
             tick.Interval = 33;
             tick.Elapsed += Tick_Elapsed;
             tick.Enabled = true;
         }
 
+        public void SetSalinity(float Salinity)
+        {
+            if (Salinity < 1)
+            {
+                Salinity = 1;
+            }
+            conditions.Salinity = Salinity;
+        }
+        public void SetSunlight(float Light)
+        {
+            conditions.Sunlight = Light;
+        }
+
         private void Tick_Elapsed(object sender, ElapsedEventArgs e)
         {
-            CellConditions conditions = new CellConditions(Light ? 10 : 0, 0, 0);
             HashSet<Cell> toRemove = new HashSet<Cell>();
             foreach (Cell c in Cells)
             {
@@ -48,16 +60,12 @@ namespace WinForms_Project
             }
         }
 
-        public Cell AddCell(PointF location)
+        public ICell AddCell(CellMode mode, PointF location)
         {
-            Cell c = new Cell(location);
+            Cell c = mode.Create();
+            c.Location = location;
             cells.Add(c);
             return c;
-        }
-
-        public void SetLight(bool state)
-        {
-            Light = state;
         }
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms Project", "WinForms Project\WinForms Project.csproj", "{7D7A4448-838A-473B-B6E3-4405008E4B62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MACTrackBarLib", "MACTrackBarLib\MACTrackBarLib.csproj", "{77A112B1-5440-440B-A0F6-2EDCC5B093CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7D7A4448-838A-473B-B6E3-4405008E4B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D7A4448-838A-473B-B6E3-4405008E4B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D7A4448-838A-473B-B6E3-4405008E4B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A112B1-5440-440B-A0F6-2EDCC5B093CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A112B1-5440-440B-A0F6-2EDCC5B093CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A112B1-5440-440B-A0F6-2EDCC5B093CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A112B1-5440-440B-A0F6-2EDCC5B093CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
