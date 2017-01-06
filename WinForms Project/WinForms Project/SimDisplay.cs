@@ -49,6 +49,13 @@ namespace WinForms_Project
             tick = new System.Timers.Timer();
             tick.Interval = 33;
             tick.Elapsed += Tick_Elapsed;
+            
+            antiAliasBase = new Bitmap(antialiasing * SimView.Width, antialiasing * SimView.Height);
+            antialiasTarget = Graphics.FromImage(antiAliasBase);
+        }
+        
+        private void SimDisplay_Load(object sender, EventArgs e)
+        {
             tick.Enabled = true;
         }
 
@@ -68,55 +75,24 @@ namespace WinForms_Project
             Refresh();
         }
 
+        Bitmap antiAliasBase;
+        Graphics antialiasTarget;
+        int antialiasing = 2;
+
         private void SimView_Paint(object sender, PaintEventArgs e)
         {
-            int antiailasing = 4;
-            using (Bitmap antiAliasBase = new Bitmap(antiailasing * SimView.Width, antiailasing * SimView.Height))
+            antialiasTarget.Clear(Color.CornflowerBlue);
+            foreach (Cell c in simulation.Cells)
             {
-                Graphics target = Graphics.FromImage(antiAliasBase);
-                foreach (Cell c in simulation.Cells)
-                {
-                    target.FillEllipse(Brushes.Green, new Rectangle((int)(antiailasing * (c.Location.X - c.Mass / 2)), (int)(antiailasing * (c.Location.Y - c.Mass / 2)), (int)(antiailasing * c.Mass), (int)(antiailasing * c.Mass)));
-                }
-                target.Dispose();
-                e.Graphics.DrawImage(antiAliasBase, new Rectangle(0, 0, SimView.Width, SimView.Height));
+                RectangleF borders = new RectangleF((c.Location.X - c.Radius * 3), (c.Location.Y - c.Radius * 3), c.Radius * 2 * 3, c.Radius * 2 * 3);
+                borders.X *= antialiasing;
+                borders.Y *= antialiasing;
+                borders.Width *= antialiasing;
+                borders.Height *= antialiasing;
+                antialiasTarget.FillEllipse(Brushes.Green, borders);
+                antialiasTarget.DrawEllipse(Pens.Blue, borders);
             }
-        }
-
-        protected override bool IsInputKey(Keys keyData)
-        {
-            switch (keyData)
-            {
-                case Keys.Right:
-                case Keys.Left:
-                case Keys.Up:
-                case Keys.Down:
-                    return true;
-                case Keys.Shift | Keys.Right:
-                case Keys.Shift | Keys.Left:
-                case Keys.Shift | Keys.Up:
-                case Keys.Shift | Keys.Down:
-                    return true;
-            }
-            return base.IsInputKey(keyData);
-        }
-
-        private void SimDisplay_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Space:
-                    lit = !lit;
-                    simulation.SetSunlight(lit ? 10 : 5);
-                    BackColor = lit ? SystemColors.Control : SystemColors.ControlDark;
-                    break;
-                case Keys.Right:
-                    simulation.SetSalinity(10);
-                    break;
-                case Keys.Left:
-                    simulation.SetSalinity(1);
-                    break;
-            }
+            e.Graphics.DrawImage(antiAliasBase, new Rectangle(0, 0, SimView.Width, SimView.Height));
         }
 
         private void SalinityBar_ValueChanged(object sender, decimal value)
@@ -136,6 +112,11 @@ namespace WinForms_Project
 
             SunlightBar.Width = flowLayoutPanel1.Width - (flowLayoutPanel1.Padding.Left + flowLayoutPanel1.Padding.Right);
             SunlightBar.Height = flowLayoutPanel1.Height - (flowLayoutPanel1.Padding.Top + flowLayoutPanel1.Padding.Bottom);
+            
+            antiAliasBase.Dispose();
+            antialiasTarget.Dispose();
+            antiAliasBase = new Bitmap(antialiasing * SimView.Width, antialiasing * SimView.Height);
+            antialiasTarget = Graphics.FromImage(antiAliasBase);
         }
     }
 }

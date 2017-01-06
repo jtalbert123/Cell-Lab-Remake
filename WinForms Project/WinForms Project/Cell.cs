@@ -13,6 +13,7 @@ namespace WinForms_Project.Sim
         float Mass { get; }
         bool Alive { get; }
         CellType Type { get; }
+        float Radius { get; }
     }
 
     abstract class Cell : ICell
@@ -22,11 +23,12 @@ namespace WinForms_Project.Sim
         public bool Alive { get; protected set; }
         public abstract CellType Type { get; }
         public CellMode Mode { get; protected set; }
+        public float Radius { get { return (float)Math.Pow(Mass * 3 / 4 / Math.PI, 1 / 3f); } }
 
         public Cell(CellMode mode)
         {
             Mode = mode;
-            Mass = 50;
+            Mass = 500;
             Alive = true;
         }
 
@@ -36,12 +38,13 @@ namespace WinForms_Project.Sim
             {
                 return;
             }
-            Mass -= 1f / conditions.Salinity;
-            if (Mass > 100)
+            // Surface area / Salinity
+            Mass -= 4 * (float)Math.PI * Radius * Radius * 1f / conditions.Salinity;
+            if (Mass > 1000)
             {
-                Mass = 100;
+                Mass = 1000;
             }
-            else if (Mass <= 10)
+            else if (Mass <= 100)
             {
                 Alive = false;
             }

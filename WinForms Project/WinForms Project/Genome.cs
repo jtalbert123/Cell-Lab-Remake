@@ -12,6 +12,11 @@ namespace WinForms_Project.Sim
         public int InitialModeIndex { get; set; }
 
         private List<CellMode> modes;
+
+        public Genome()
+        {
+            modes = new List<CellMode>();
+        }
     }
 
     public enum CellType

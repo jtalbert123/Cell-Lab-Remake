@@ -10,10 +10,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/MonoGame Project/MonoGame Project
 /WinForms Project/.vs/WinForms Project/v14
 /WinForms Project/MACTrackBarLib/bin/Debug
 /WinForms Project/MACTrackBarLib/obj/Debug
 *.user
 /WinForms Project/WinForms Project/bin/Debug
 /WinForms Project/WinForms Project/obj/Debug
+/MonoGame Project/.vs/MonoGame Project/v14
+/MonoGame Project/MonoGame Project/bin/DesktopGL/x86/Debug
+/MonoGame Project/MonoGame Project/Content/bin/DesktopGL
+/MonoGame Project/MonoGame Project/Content/obj/DesktopGL
+/MonoGame Project/MonoGame Project/obj/x86/Debug

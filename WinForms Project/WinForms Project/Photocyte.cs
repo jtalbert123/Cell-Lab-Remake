@@ -21,7 +21,7 @@ namespace WinForms_Project.Sim
             {
                 return;
             }
-            Mass += (conditions.Sunlight - 3) / 10;
+            Mass += conditions.Sunlight * ((float)Math.PI*Radius*Radius) / 10;
             base.Tick(conditions);
         }
     }
