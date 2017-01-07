@@ -46,7 +46,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 43);
+            label1.Location = new System.Drawing.Point(3, 29);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(45, 13);
             label1.TabIndex = 0;
@@ -94,20 +94,23 @@
             this.SalinityBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SalinityBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
             this.SalinityBar.IndentHeight = 0;
+            this.SalinityBar.LargeChange = 20;
             this.SalinityBar.Location = new System.Drawing.Point(3, 16);
-            this.SalinityBar.Maximum = 10;
-            this.SalinityBar.Minimum = 0;
+            this.SalinityBar.Maximum = 60;
+            this.SalinityBar.Minimum = 2;
             this.SalinityBar.Name = "SalinityBar";
-            this.SalinityBar.Size = new System.Drawing.Size(319, 24);
+            this.SalinityBar.Size = new System.Drawing.Size(319, 10);
             this.SalinityBar.TabIndex = 5;
+            this.SalinityBar.TextTickStyle = System.Windows.Forms.TickStyle.None;
             this.SalinityBar.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
+            this.SalinityBar.TickFrequency = 5;
             this.SalinityBar.TickHeight = 4;
             this.SalinityBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SalinityBar.TrackerColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(130)))), ((int)(((byte)(198)))));
             this.SalinityBar.TrackerSize = new System.Drawing.Size(10, 10);
             this.SalinityBar.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
             this.SalinityBar.TrackLineHeight = 3;
-            this.SalinityBar.Value = 8;
+            this.SalinityBar.Value = 40;
             this.SalinityBar.ValueChanged += new XComponent.SliderBar.ValueChangedHandler(this.SalinityBar_ValueChanged);
             // 
             // SunlightBar
@@ -117,12 +120,13 @@
             this.SunlightBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SunlightBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
             this.SunlightBar.IndentHeight = 0;
-            this.SunlightBar.Location = new System.Drawing.Point(3, 59);
-            this.SunlightBar.Maximum = 10;
+            this.SunlightBar.Location = new System.Drawing.Point(3, 45);
+            this.SunlightBar.Maximum = 120;
             this.SunlightBar.Minimum = 0;
             this.SunlightBar.Name = "SunlightBar";
-            this.SunlightBar.Size = new System.Drawing.Size(319, 24);
+            this.SunlightBar.Size = new System.Drawing.Size(319, 10);
             this.SunlightBar.TabIndex = 3;
+            this.SunlightBar.TextTickStyle = System.Windows.Forms.TickStyle.None;
             this.SunlightBar.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
             this.SunlightBar.TickHeight = 4;
             this.SunlightBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -130,7 +134,7 @@
             this.SunlightBar.TrackerSize = new System.Drawing.Size(10, 10);
             this.SunlightBar.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
             this.SunlightBar.TrackLineHeight = 3;
-            this.SunlightBar.Value = 8;
+            this.SunlightBar.Value = 80;
             this.SunlightBar.ValueChanged += new XComponent.SliderBar.ValueChangedHandler(this.SunlightBar_ValueChanged);
             // 
             // SimDisplay
@@ -141,7 +145,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "SimDisplay";
             this.Size = new System.Drawing.Size(325, 518);
-            this.Load += new System.EventHandler(this.SimDisplay_Load);
             this.Resize += new System.EventHandler(this.SimDisplay_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);

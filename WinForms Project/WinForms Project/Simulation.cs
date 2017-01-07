@@ -8,22 +8,20 @@ using System.Timers;
 
 namespace WinForms_Project.Sim
 {
+
     public class Simulation
     {
-        public IEnumerable<ICell> Cells { get { return cells; } }
+        public IEnumerable<Cell> Cells { get { return cells; } }
 
         private ISet<Cell> cells;
-        private Timer tick;
         private CellConditions conditions;
+        private ISet<Cell> newCells;
 
         public Simulation()
         {
             cells = new HashSet<Cell>();
             conditions = new CellConditions(10, 0, 10);
-            tick = new Timer();
-            tick.Interval = 33;
-            tick.Elapsed += Tick_Elapsed;
-            tick.Enabled = true;
+            newCells = new HashSet<Cell>();
         }
 
         public void SetSalinity(float Salinity)
@@ -39,33 +37,62 @@ namespace WinForms_Project.Sim
             conditions.Sunlight = Light;
         }
 
-        private void Tick_Elapsed(object sender, ElapsedEventArgs e)
+        public void Tick()
         {
             HashSet<Cell> toRemove = new HashSet<Cell>();
-            foreach (Cell c in Cells)
+            lock (cells)
             {
-                if (!c.Alive)
+                foreach (Cell c in Cells)
                 {
-                    toRemove.Add(c);
+                    if (!c.Alive)
+                    {
+                        toRemove.Add(c);
+                    }
                 }
-            }
-            foreach (Cell c in toRemove)
-            {
-                cells.Remove(c);
-            }
-
-            foreach (Cell c in Cells)
-            {
-                c.Tick(conditions);
+                foreach (Cell c in toRemove)
+                {
+                    cells.Remove(c);
+                }
+                foreach (Cell c in Cells)
+                {
+                    CellConditions localConditions = conditions;
+                    localConditions.Sunlight = Math.Max(0, conditions.Sunlight * (3 - c.Location.Y/100f)/3);
+                    c.Tick(localConditions);
+                }
+                foreach (Cell c in newCells)
+                {
+                    cells.Add(c);
+                }
+                newCells.Clear();
             }
         }
 
-        public ICell AddCell(CellMode mode, PointF location)
+        public Cell NewCell(CellMode mode, PointF location)
         {
-            Cell c = mode.Create();
+            Cell c = mode.CreateCell(this);
             c.Location = location;
             cells.Add(c);
             return c;
+        }
+
+        internal void SplitCell(Cell cell)
+        {
+            PointF child1Loc = cell.Location;
+            child1Loc.Y -= 50;
+            PointF child2Loc = cell.Location;
+            child2Loc.Y += 50;
+            Cell child1 = cell.Mode.CreateCell(this);
+            child1.Location = child1Loc;
+            Cell child2 = cell.Mode.CreateCell(this);
+            child2.Location = child2Loc;
+            child1.Mass = cell.Mass / 2;
+            child2.Mass = cell.Mass / 2;
+            if (child1Loc.Y > 0)
+            {
+                newCells.Add(child1);
+            }
+            newCells.Add(child2);
+            cell.Kill();
         }
     }
 }

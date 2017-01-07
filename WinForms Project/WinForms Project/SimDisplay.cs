@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForms_Project.Sim;
+using System.Diagnostics;
+using System.Threading;
 
 namespace WinForms_Project
 {
@@ -16,13 +18,9 @@ namespace WinForms_Project
         private MyPanel SimView;
 
         Simulation simulation;
-        bool lit = true;
-
-        System.Timers.Timer tick;
 
         public SimDisplay()
         {
-
             this.SimView = new MyPanel();
 
             InitializeComponent();
@@ -46,63 +44,79 @@ namespace WinForms_Project
             simulation = new Simulation();
             simulation.SetSalinity(SalinityBar.Value);
             simulation.SetSunlight(SunlightBar.Value);
-            tick = new System.Timers.Timer();
-            tick.Interval = 33;
-            tick.Elapsed += Tick_Elapsed;
             
             antiAliasBase = new Bitmap(antialiasing * SimView.Width, antialiasing * SimView.Height);
             antialiasTarget = Graphics.FromImage(antiAliasBase);
-        }
-        
-        private void SimDisplay_Load(object sender, EventArgs e)
-        {
-            tick.Enabled = true;
+
+            Task.Run(new Action(Loop));
         }
 
-        private void Tick_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        Stopwatch frameLimit;
+        private void Loop()
         {
-            try
+            frameLimit = new Stopwatch();
+            while (true)
             {
-                Invoke(new Action(() => Refresh()));
+                frameLimit.Restart();
+                simulation.Tick();
+                try
+                {
+                    Invoke(new Action(() => Refresh()));
+                }
+                catch { }
+                frameLimit.Stop();
+                if (frameLimit.ElapsedMilliseconds < 33)
+                {
+                    Thread.Sleep(33 - (int)frameLimit.ElapsedMilliseconds);
+                }
             }
-            catch { }
         }
 
         private void SimView_Click(object sender, EventArgs e)
         {
             Point mousePos = SimView.PointToClient(Cursor.Position);
-            simulation.AddCell(new CellMode() { Type = CellType.Photocyte }, new PointF(mousePos.X, mousePos.Y));
+            simulation.NewCell(new CellMode() { Type = CellType.Photocyte, SplitMass = 900 }, new PointF(mousePos.X, mousePos.Y));
             Refresh();
         }
 
         Bitmap antiAliasBase;
         Graphics antialiasTarget;
-        int antialiasing = 2;
+        int antialiasing = 1;
 
         private void SimView_Paint(object sender, PaintEventArgs e)
         {
             antialiasTarget.Clear(Color.CornflowerBlue);
-            foreach (Cell c in simulation.Cells)
+
+            lock (simulation.Cells)
             {
-                RectangleF borders = new RectangleF((c.Location.X - c.Radius * 3), (c.Location.Y - c.Radius * 3), c.Radius * 2 * 3, c.Radius * 2 * 3);
-                borders.X *= antialiasing;
-                borders.Y *= antialiasing;
-                borders.Width *= antialiasing;
-                borders.Height *= antialiasing;
-                antialiasTarget.FillEllipse(Brushes.Green, borders);
-                antialiasTarget.DrawEllipse(Pens.Blue, borders);
+                foreach (Cell c in simulation.Cells)
+                {
+                    RectangleF borders = new RectangleF((c.Location.X - c.Radius * 4), (c.Location.Y - c.Radius * 4), c.Radius * 2 * 4, c.Radius * 2 * 4);
+                    RectangleF center = new RectangleF((c.Location.X - c.Radius), (c.Location.Y - c.Radius), c.Radius * 2, c.Radius * 2);
+                    borders.X *= antialiasing;
+                    borders.Y *= antialiasing;
+                    borders.Width *= antialiasing;
+                    borders.Height *= antialiasing;
+                    center.X *= antialiasing;
+                    center.Y *= antialiasing;
+                    center.Width *= antialiasing;
+                    center.Height *= antialiasing;
+                    antialiasTarget.FillEllipse(Brushes.Green, borders);
+                    antialiasTarget.FillEllipse(Brushes.Blue, center);
+                    antialiasTarget.DrawEllipse(Pens.Blue, borders);
+                }
             }
             e.Graphics.DrawImage(antiAliasBase, new Rectangle(0, 0, SimView.Width, SimView.Height));
         }
 
         private void SalinityBar_ValueChanged(object sender, decimal value)
         {
-            simulation.SetSalinity(SalinityBar.Value);
+            simulation.SetSalinity((float)Math.Pow(2, SalinityBar.Value/10f));
         }
 
         private void SunlightBar_ValueChanged(object sender, decimal value)
         {
-            simulation.SetSunlight(SunlightBar.Value);
+            simulation.SetSunlight(SunlightBar.Value/10f);
         }
 
         private void SimDisplay_Resize(object sender, EventArgs e)
@@ -113,6 +127,7 @@ namespace WinForms_Project
             SunlightBar.Width = flowLayoutPanel1.Width - (flowLayoutPanel1.Padding.Left + flowLayoutPanel1.Padding.Right);
             SunlightBar.Height = flowLayoutPanel1.Height - (flowLayoutPanel1.Padding.Top + flowLayoutPanel1.Padding.Bottom);
             
+            // re-allocate antiailasing canvas
             antiAliasBase.Dispose();
             antialiasTarget.Dispose();
             antiAliasBase = new Bitmap(antialiasing * SimView.Width, antialiasing * SimView.Height);

@@ -14,5 +14,14 @@ namespace WinForms_Project
             get { return DoubleBuffered; }
             set { DoubleBuffered = value; }
         }
+
+        /// <summary>
+        /// Do not paint the background, the paint event handler paints everything.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+
+        }
     }
 }

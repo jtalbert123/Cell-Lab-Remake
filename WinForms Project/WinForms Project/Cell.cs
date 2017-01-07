@@ -7,29 +7,23 @@ using System.Drawing;
 
 namespace WinForms_Project.Sim
 {
-    public interface ICell
-    {
-        PointF Location { get; }
-        float Mass { get; }
-        bool Alive { get; }
-        CellType Type { get; }
-        float Radius { get; }
-    }
-
-    abstract class Cell : ICell
+    public abstract class Cell
     {
         public PointF Location { get; set; }
-        public float Mass { get; protected set; }
-        public bool Alive { get; protected set; }
+        public float Mass { get; set; }
+        public bool Alive { get; set; }
         public abstract CellType Type { get; }
-        public CellMode Mode { get; protected set; }
+        public CellMode Mode { get; }
         public float Radius { get { return (float)Math.Pow(Mass * 3 / 4 / Math.PI, 1 / 3f); } }
 
-        public Cell(CellMode mode)
+        protected Simulation Container;
+
+        public Cell(CellMode mode, Simulation container)
         {
             Mode = mode;
             Mass = 500;
             Alive = true;
+            Container = container;
         }
 
         public virtual void Tick(CellConditions conditions)
@@ -46,8 +40,17 @@ namespace WinForms_Project.Sim
             }
             else if (Mass <= 100)
             {
-                Alive = false;
+                Kill();
             }
+            if (Mass >= Mode.SplitMass)
+            {
+                Container.SplitCell(this);
+            }
+        }
+
+        internal void Kill()
+        {
+            Alive = false;
         }
     }
 }

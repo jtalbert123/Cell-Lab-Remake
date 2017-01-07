@@ -8,7 +8,7 @@ namespace WinForms_Project.Sim
 {
     class Photocyte : Cell
     {
-        public Photocyte(CellMode mode) : base(mode)
+        public Photocyte(CellMode mode, Simulation container) : base(mode, container)
         {
 
         }
@@ -21,7 +21,7 @@ namespace WinForms_Project.Sim
             {
                 return;
             }
-            Mass += conditions.Sunlight * ((float)Math.PI*Radius*Radius) / 10;
+            Mass += Math.Min(30f, conditions.Sunlight * ((float)Math.PI*Radius*Radius) / 10);
             base.Tick(conditions);
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinForms_Project.Sim
 {
-    struct CellConditions
+    public struct CellConditions
     {
         public float Sunlight {get; set; }
         public float Nitrogen { get; set; }
