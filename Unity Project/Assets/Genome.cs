@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class Genome : ICloneable
 {
@@ -46,6 +47,7 @@ public class CellMode
     public float SplitMass { get; set; }
     public CellMode Child1 { get; set; }
     public CellMode Child2 { get; set; }
+    public Color Color { get; set; }
 
     public CellMode()
     {

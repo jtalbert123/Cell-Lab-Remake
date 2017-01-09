@@ -23,6 +23,7 @@ public class Substrate : MonoBehaviour {
             {
                 GameObject cell = Instantiate(PrefabReference);
                 cell.transform.position = position;
+                cell.transform.SetParent(transform, false);
             }
         }
 	}
