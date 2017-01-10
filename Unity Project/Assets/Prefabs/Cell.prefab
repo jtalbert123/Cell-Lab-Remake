@@ -90,6 +90,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mass: 1.5
+  genome:
+    InitialModeIndex: 0
+    modes:
+    - Type: 0
+      SplitMass: 2.7
+      SplitAngle: 20
+      Child1ModeIndex: 0
+      Child2ModeIndex: 0
+      Color: {r: 0, g: 1, b: 0.25517225, a: 1}
+      MakeAdhesin: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 0
+    - Type: 0
+      SplitMass: 2.1
+      SplitAngle: 0
+      Child1ModeIndex: 1
+      Child2ModeIndex: 1
+      Color: {r: 1, g: 0, b: 0, a: 1}
+      MakeAdhesin: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 0
+  cellMode: 0
 --- !u!114 &114914867376791462
 MonoBehaviour:
   m_ObjectHideFlags: 1

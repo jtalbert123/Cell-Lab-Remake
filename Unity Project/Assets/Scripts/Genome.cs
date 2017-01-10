@@ -4,67 +4,80 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class Genome : ICloneable
+[Serializable]
+public struct Genome
 {
     public IEnumerable<CellMode> Modes { get { return modes; } }
-    public CellMode InitialMode { get; set; }
+    public int ModeCount { get { return modes == null ? 0 : modes.Length; } }
+    public CellMode InitialMode { get { return modes[InitialModeIndex]; } }
+    public int InitialModeIndex;
 
-    private List<CellMode> modes;
+    public CellMode[] modes;
 
-    public Genome()
+    public static Genome DefaultGenome { get; private set; }
+
+    static Genome()
     {
-        modes = new List<CellMode>();
-        InitialMode = null;
+        Genome genome = new Genome();
+        genome.InitialModeIndex = 0;
+        CellMode mode1 = new CellMode(0);
+        genome.AddMode(mode1);
     }
 
-    public object Clone()
+    public Genome Clone()
     {
         Genome other = new Genome();
-        foreach (CellMode mode in modes)
-        {
-            CellMode clone = new CellMode(mode);
-            other.modes.Add(clone);
-        }
-        for (int i = 0; i < modes.Count; i++)
-        {
-            CellMode local = modes[i];
-            CellMode remote = other.modes[i];
-            remote.Child1 = other.modes[modes.IndexOf(local.Child1)];
-            remote.Child2 = other.modes[modes.IndexOf(local.Child2)];
-        }
+        other.modes = modes.Clone() as CellMode[];
+        other.InitialModeIndex = InitialModeIndex;
         return other;
+    }
+
+    public CellMode this[int index]
+    {
+        get { return modes[index]; }
+    }
+
+    internal void AddMode(CellMode mode)
+    {
+        CellMode[] newarr = new CellMode[ModeCount + 1];
+        for (int i = 0; i < ModeCount; i++)
+        {
+            newarr[i] = modes[i];
+        }
+        newarr[ModeCount] = mode;
+        modes = newarr;
     }
 }
 
+[Serializable]
 public enum CellType
 {
     Photocyte
 }
 
-public class CellMode
+[Serializable]
+public struct CellMode
 {
-    public CellType Type { get; set; }
-    public float SplitMass { get; set; }
-    public CellMode Child1 { get; set; }
-    public CellMode Child2 { get; set; }
-    public Color Color { get; set; }
-    public bool MakeAdhesin { get; set; }
-    public bool Child1KeepAdhesin { get; set; }
-    public bool Child2KeepAdhesin { get; set; }
+    public CellType Type;
+    public float SplitMass;
+    public float SplitAngle;
+    public int Child1ModeIndex;
+    public int Child2ModeIndex;
+    public Color Color;
+    public bool MakeAdhesin;
+    public bool Child1KeepAdhesin;
+    public bool Child2KeepAdhesin;
 
-    public CellMode()
+    public CellMode(int index)
     {
+        Type = CellType.Photocyte;
+        Child1ModeIndex = index;
+        Child2ModeIndex = index;
+        Child1KeepAdhesin = false;
+        Child2KeepAdhesin = false;
+        Color = Color.green;
         MakeAdhesin = false;
-    }
-
-        /// <summary>
-        /// Copies the value parameters from other to the new mode.
-        /// Does not copy child references.
-        /// </summary>
-        /// <param name = "other" > the mode to copy from</param>
-        internal CellMode(CellMode other)
-    {
-        Type = other.Type;
-        SplitMass = other.SplitMass;
+        SplitMass = 2.54f;
+        SplitAngle = 0f;
     }
 }

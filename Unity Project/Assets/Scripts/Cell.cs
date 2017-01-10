@@ -6,7 +6,8 @@ using UnityEngine;
 public class Cell : MonoBehaviour {
 
     public float Mass = 3f;
-    public CellMode mode;
+    public Genome genome;
+    public int cellMode;
 
     public bool Alive { get; set; }
 
@@ -18,57 +19,12 @@ public class Cell : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if (mode == null)
-        { // Diagnostic, for initial cell, placed from Unity editor
-            mode = new CellMode();
-            mode.Type = CellType.Photocyte;
-            mode.SplitMass = 2.54f;
-            mode.Child1 = mode;
-            mode.Child2 = mode;
-            mode.Color = new Color(0f, 1f, 0f);
-            mode.MakeAdhesin = true;
-            mode.Child2KeepAdhesin = true;
-
-            CellMode mode1 = new CellMode();
-            mode1.Type = CellType.Photocyte;
-            mode1.SplitMass = float.PositiveInfinity;
-            mode1.Child1 = mode1;
-            mode1.Child2 = mode1;
-            mode1.Color = new Color(1f, 0f, 0f);
-
-            CellMode mode2 = new CellMode();
-            mode2.Type = CellType.Photocyte;
-            mode2.SplitMass = 2.6f;
-            mode2.Child1 = mode2;
-            mode2.Child2 = mode2;
-            mode2.Color = new Color(0f, 0f, 1f);
-            mode2.MakeAdhesin = true;
-            mode2.Child2KeepAdhesin = true;
-
-            mode.Child2 = mode1;
-            mode1.Child2 = mode2;
-            mode2.Child2 = mode;
-        }
         Alive = true;
         physics = GetComponent<Rigidbody2D>();
         physics.mass = Mass;
         transform.localScale = new Vector3(1, 1, 1) * Mass / 4f;
         SpriteRenderer graphics = GetComponent<SpriteRenderer>();
-        graphics.color = mode.Color;
-    }
-
-    void OnDestroy()
-    {
-        BreakAllAdhesin();
-    }
-
-    private void BreakAllAdhesin()
-    {
-        foreach (Adhesin ad in adhesins)
-        {
-            ad.Break();
-        }
-        adhesins.Clear();
+        graphics.color = genome[cellMode].Color;
     }
 
     // Update is called once per frame
@@ -85,13 +41,12 @@ public class Cell : MonoBehaviour {
         if (Mass < 1f)
         {
             Alive = false;
-            BreakAllAdhesin();
             Destroy(gameObject);
             return;
         }
         physics.mass = Mass;
         transform.localScale = new Vector3(1, 1, 1) * Radius;
-        if (Mass >= mode.SplitMass)
+        if (Mass >= genome[cellMode].SplitMass)
         {
             if (GameObject.FindGameObjectsWithTag("Cell").Length > 1000)
             {
@@ -99,22 +54,22 @@ public class Cell : MonoBehaviour {
             }
 
 
-            GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation);
-            GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation);
-            child1.name = gameObject.name;
-            child2.name = gameObject.name;
-            child1.transform.SetParent(transform.parent, false);
-            child2.transform.SetParent(transform.parent, false);
+            GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
+            GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
+            child1.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
+            child2.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
             Rigidbody2D child1physics = child1.GetComponent<Rigidbody2D>();
             Rigidbody2D child2physics = child2.GetComponent<Rigidbody2D>();
             Cell child1Data = child1.GetComponent<Cell>();
             Cell child2Data = child2.GetComponent<Cell>();
             child1Data.Mass = Mass / 2f;
             child2Data.Mass = Mass / 2f;
-            child1Data.mode = mode.Child1;
-            child2Data.mode = mode.Child2;
+            child1Data.genome = genome.Clone();
+            child2Data.genome = genome.Clone();
+            child1Data.cellMode = genome[cellMode].Child1ModeIndex;
+            child2Data.cellMode = genome[cellMode].Child2ModeIndex;
 
-            Vector2 splitVelocity = new Vector2(-1, 0).Rotate(transform.eulerAngles.z);
+            Vector2 splitVelocity = new Vector2(-1, 0).Rotate(transform.eulerAngles.z + genome[cellMode].SplitAngle);
 
             child1physics.velocity = physics.velocity + splitVelocity;
             child2physics.velocity = physics.velocity - splitVelocity;
@@ -122,38 +77,69 @@ public class Cell : MonoBehaviour {
             //Component[] child1Components = child1.GetComponents<Component>();
             //Component[] child2Components = child2.GetComponents<Component>();
 
-            if (mode.Child1KeepAdhesin)
+            if (genome[cellMode].Child1KeepAdhesin)
             {
                 foreach (Adhesin ad in adhesins)
                 {
-                    GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
-                    adhesin.transform.SetParent(gameObject.transform.parent);
-                    Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
-                    adhesinData.Cell1 = child1Data;
-                    adhesinData.Cell2 = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+                    Cell otherCell = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+                    bool alreadyexists = false;
+                    foreach (Adhesin child1Adhesin in child1Data.adhesins)
+                    {
+                        if (child1Adhesin.Cell1 == otherCell || child1Adhesin.Cell2 == otherCell)
+                        {
+                            alreadyexists = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyexists)
+                    {
+                        GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
+                        adhesin.transform.SetParent(gameObject.transform.parent);
+                        Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
+                        adhesinData.Cell1 = child1Data;
+                        adhesinData.Cell2 = otherCell;
+                        child1Data.AddAdhesin(adhesinData);
+                        otherCell.AddAdhesin(adhesinData);
+                    }
                 }
             }
 
-            if (mode.Child2KeepAdhesin)
+            if (genome[cellMode].Child2KeepAdhesin)
             {
                 foreach (Adhesin ad in adhesins)
                 {
-                    GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
-                    adhesin.transform.SetParent(gameObject.transform.parent);
-                    Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
-                    adhesinData.Cell1 = child2Data;
-                    adhesinData.Cell2 = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+                    Cell otherCell = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+                    bool alreadyexists = false;
+                    foreach (Adhesin child2Adhesin in child2Data.adhesins)
+                    {
+                        if (child2Adhesin.Cell1 == otherCell || child2Adhesin.Cell2 == otherCell)
+                        {
+                            alreadyexists = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyexists)
+                    {
+                        GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
+                        adhesin.transform.SetParent(gameObject.transform.parent);
+                        Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
+                        adhesinData.Cell1 = child2Data;
+                        adhesinData.Cell2 = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+                        child2Data.AddAdhesin(adhesinData);
+                        otherCell.AddAdhesin(adhesinData);
+                    }
                 }
             }
-            BreakAllAdhesin();
 
-            if (mode.MakeAdhesin)
+            if (genome[cellMode].MakeAdhesin)
             {
                 GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
                 adhesin.transform.SetParent(gameObject.transform.parent);
                 Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
                 adhesinData.Cell1 = child1Data;
                 adhesinData.Cell2 = child2Data;
+                child1Data.AddAdhesin(adhesinData);
+                child2Data.AddAdhesin(adhesinData);
             }
 
             Alive = false;
@@ -161,9 +147,14 @@ public class Cell : MonoBehaviour {
         }
     }
 
-    public void AddAdhesin(Adhesin that)
+    internal void RemoveAdhesin(Adhesin adhesin)
     {
-        adhesins.Add(that);
+        adhesins.Remove(adhesin);
+    }
+
+    public void AddAdhesin(Adhesin adhesin)
+    {
+        adhesins.Add(adhesin);
     }
 }
 

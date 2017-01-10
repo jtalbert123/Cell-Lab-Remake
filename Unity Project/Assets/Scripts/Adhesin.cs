@@ -13,8 +13,15 @@ public class Adhesin : MonoBehaviour {
 
     public SpringJoint2D spring;
 
+    private bool HasRetracted = false;
+
     // Use this for initialization
     void Start () {
+        if (Cell1 == null || Cell2 == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Cell1Physics = Cell1.GetComponent<Rigidbody2D>();
         Cell2Physics = Cell2.GetComponent<Rigidbody2D>();
 
@@ -46,24 +53,18 @@ public class Adhesin : MonoBehaviour {
         spring.autoConfigureDistance = false;
         spring.autoConfigureConnectedAnchor = false;
 
-        Cell1.AddAdhesin(this);
-        Cell2.AddAdhesin(this);
-    }
-
-    private bool destroyed = false;
-    public void Break()
-    {
-        if (!destroyed)
-        {
-            Destroy(spring);
-            Destroy(gameObject);
-            destroyed = true;
-        }
+        HasRetracted = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Cell1 == null || Cell2 == null)
+        {
+            Destroy(spring);
+            Destroy(gameObject);
+            return;
+        }
         spring.anchor = spring.anchor.normalized * Cell1.Radius * 3 / 8f;
         spring.connectedAnchor = spring.connectedAnchor.normalized * Cell2.Radius * 3 / 8f;
 
@@ -74,13 +75,41 @@ public class Adhesin : MonoBehaviour {
 
         transform.localScale = Vector3.one * (Cell1.Radius + Cell2.Radius);
 
+        if (displacement.magnitude < (Cell1.Radius + Cell2.Radius) * 0.6f)
+        {
+            HasRetracted = true;
+        }
+        else if (HasRetracted)
+        { // too far away (0.2f is the ideal position), the cells got pushed apart
+
+            Cell1.RemoveAdhesin(this);
+            Cell2.RemoveAdhesin(this);
+            Destroy(spring);
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            Vector2 dv = Cell1Physics.velocity - Cell2Physics.velocity;
+            float displacementAngle = Mathf.Atan2(displacement.y, displacement.x);
+            float velocityAngle = Mathf.Atan2(dv.y, dv.x);
+            if (Mathf.Abs(velocityAngle - displacementAngle) > Mathf.PI/2f)
+            {
+                Cell1.RemoveAdhesin(this);
+                Cell2.RemoveAdhesin(this);
+                Destroy(spring);
+                Destroy(gameObject);
+                return;
+            }
+        }
+
         float transferAmount = 0.3f * Time.deltaTime;
-        if (Cell1.Mass > Cell2.Mass + transferAmount)
+        if (Cell1.Mass > Cell2.Mass)
         {
             Cell1.Mass -= transferAmount;
             Cell2.Mass += transferAmount;
         }
-        else if (Cell2.Mass > Cell1.Mass + transferAmount)
+        else if (Cell2.Mass > Cell1.Mass)
         {
             Cell2.Mass -= transferAmount;
             Cell1.Mass += transferAmount;
