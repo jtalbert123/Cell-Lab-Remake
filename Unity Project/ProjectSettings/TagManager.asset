@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Cells
+    uniqueID: 516087017
+    locked: 0
+  - name: Adhesin
+    uniqueID: 3021821323
+    locked: 0

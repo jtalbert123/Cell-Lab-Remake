@@ -89,8 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26ea5ef86f67dd47adee63fb647a7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabReference: {fileID: 1675253672929656}
-  Mass: 3
+  Mass: 1.5
 --- !u!114 &114914867376791462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -102,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7d00a7a0e0aa444a43f1783b3781bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxAge: 10
+  MaxAge: 60
 --- !u!212 &212435575498521532
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,7 +131,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: 516087017
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5aa06f14361ab254f97aab8531146757, type: 3}
   m_Color: {r: 0, g: 0.7794118, b: 0.13438137, a: 1}

@@ -48,10 +48,13 @@ public class CellMode
     public CellMode Child1 { get; set; }
     public CellMode Child2 { get; set; }
     public Color Color { get; set; }
+    public bool MakeAdhesin { get; set; }
+    public bool Child1KeepAdhesin { get; set; }
+    public bool Child2KeepAdhesin { get; set; }
 
     public CellMode()
     {
-
+        MakeAdhesin = false;
     }
 
         /// <summary>

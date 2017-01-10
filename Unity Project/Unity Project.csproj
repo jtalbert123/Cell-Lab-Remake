@@ -52,9 +52,6 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -70,9 +67,6 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
@@ -81,14 +75,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AgeDeath.cs" />
-    <Compile Include="Assets\Cell.cs" />
-    <Compile Include="Assets\DontGoThroughThings.cs" />
-    <Compile Include="Assets\Genome.cs" />
-    <Compile Include="Assets\InitBoxRingCollider.cs" />
-    <Compile Include="Assets\InitInverted2DEdges.cs" />
-    <Compile Include="Assets\MouseControl.cs" />
-    <Compile Include="Assets\Substrate.cs" />
+    <Compile Include="Assets\Scripts\Adhesin.cs" />
+    <Compile Include="Assets\Scripts\AgeDeath.cs" />
+    <Compile Include="Assets\Scripts\Cell.cs" />
+    <Compile Include="Assets\Scripts\DontGoThroughThings.cs" />
+    <Compile Include="Assets\Scripts\Genome.cs" />
+    <Compile Include="Assets\Scripts\InitBoxRingCollider.cs" />
+    <Compile Include="Assets\Scripts\InitInverted2DEdges.cs" />
+    <Compile Include="Assets\Scripts\MouseControl.cs" />
+    <Compile Include="Assets\Scripts\PrefabSupplier.cs" />
+    <Compile Include="Assets\Scripts\Substrate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
