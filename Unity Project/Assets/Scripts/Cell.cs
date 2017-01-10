@@ -31,14 +31,16 @@ public class Cell : MonoBehaviour {
     void Update () {
         Mass -= 0.7f * Time.deltaTime;
 
-        if (Mass < 5)
+        if (Mass < 3.6f)
         {
-            // linear + radius
-            float linear = 0.08f * transform.position.y * Time.deltaTime;
-            float radial = 0.15f * transform.position.magnitude * Time.deltaTime;
-            Mass += linear + radial;
+            Mass += 1.28f * Time.deltaTime;
+
+            //// linear + radius
+            //float linear = 0.08f * transform.position.y * Time.deltaTime;
+            //float radial = 0.15f * transform.position.magnitude * Time.deltaTime;
+            //Mass += linear + radial;
         }
-        if (Mass < 1f)
+        if (Mass < 0.6f)
         {
             Alive = false;
             Destroy(gameObject);
@@ -48,102 +50,100 @@ public class Cell : MonoBehaviour {
         transform.localScale = new Vector3(1, 1, 1) * Radius;
         if (Mass >= genome[cellMode].SplitMass)
         {
-            if (GameObject.FindGameObjectsWithTag("Cell").Length > 1000)
+            Split();
+        }
+    }
+
+    void Split()
+    {
+        if (GameObject.FindGameObjectsWithTag("Cell").Length > 1000)
+        {
+            return;
+        }
+
+
+        GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
+        GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
+        child1.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
+        child2.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
+        Rigidbody2D child1physics = child1.GetComponent<Rigidbody2D>();
+        Rigidbody2D child2physics = child2.GetComponent<Rigidbody2D>();
+        Cell child1Data = child1.GetComponent<Cell>();
+        Cell child2Data = child2.GetComponent<Cell>();
+        child1Data.Mass = Mass / 2f;
+        child2Data.Mass = Mass / 2f;
+        child1Data.genome = genome.Clone();
+        child2Data.genome = genome.Clone();
+        child1Data.cellMode = genome[cellMode].Child1ModeIndex;
+        child2Data.cellMode = genome[cellMode].Child2ModeIndex;
+
+        Vector2 splitVelocity = new Vector2(-.3f, 0).Rotate(transform.eulerAngles.z + genome[cellMode].SplitAngle);
+
+        child1physics.velocity = physics.velocity + splitVelocity;
+        child2physics.velocity = physics.velocity - splitVelocity;
+
+        //Component[] child1Components = child1.GetComponents<Component>();
+        //Component[] child2Components = child2.GetComponents<Component>();
+
+        if (genome[cellMode].Child1KeepAdhesin)
+        {
+            ReBuildAdhesins(child1Data);
+        }
+
+        if (genome[cellMode].Child2KeepAdhesin)
+        {
+            ReBuildAdhesins(child2Data);
+        }
+
+        if (genome[cellMode].MakeAdhesin)
+        {
+            GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
+            adhesin.transform.SetParent(gameObject.transform.parent);
+            Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
+            adhesinData.Cell1 = child1Data;
+            adhesinData.Cell2 = child2Data;
+            child1Data.AddAdhesin(adhesinData);
+            child2Data.AddAdhesin(adhesinData);
+        }
+
+        Alive = false;
+        Destroy(gameObject);
+    }
+
+    void ReBuildAdhesins(Cell child)
+    {
+        foreach (Adhesin ad in adhesins)
+        {
+            Cell otherCell = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
+            bool alreadyexists = false;
+            foreach (Adhesin child2Adhesin in child.adhesins)
             {
-                return;
-            }
-
-
-            GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
-            GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
-            child1.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
-            child2.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
-            Rigidbody2D child1physics = child1.GetComponent<Rigidbody2D>();
-            Rigidbody2D child2physics = child2.GetComponent<Rigidbody2D>();
-            Cell child1Data = child1.GetComponent<Cell>();
-            Cell child2Data = child2.GetComponent<Cell>();
-            child1Data.Mass = Mass / 2f;
-            child2Data.Mass = Mass / 2f;
-            child1Data.genome = genome.Clone();
-            child2Data.genome = genome.Clone();
-            child1Data.cellMode = genome[cellMode].Child1ModeIndex;
-            child2Data.cellMode = genome[cellMode].Child2ModeIndex;
-
-            Vector2 splitVelocity = new Vector2(-1, 0).Rotate(transform.eulerAngles.z + genome[cellMode].SplitAngle);
-
-            child1physics.velocity = physics.velocity + splitVelocity;
-            child2physics.velocity = physics.velocity - splitVelocity;
-
-            //Component[] child1Components = child1.GetComponents<Component>();
-            //Component[] child2Components = child2.GetComponents<Component>();
-
-            if (genome[cellMode].Child1KeepAdhesin)
-            {
-                foreach (Adhesin ad in adhesins)
+                if (child2Adhesin.Cell1 == otherCell || child2Adhesin.Cell2 == otherCell)
                 {
-                    Cell otherCell = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
-                    bool alreadyexists = false;
-                    foreach (Adhesin child1Adhesin in child1Data.adhesins)
-                    {
-                        if (child1Adhesin.Cell1 == otherCell || child1Adhesin.Cell2 == otherCell)
-                        {
-                            alreadyexists = true;
-                            break;
-                        }
-                    }
-                    if (!alreadyexists)
-                    {
-                        GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
-                        adhesin.transform.SetParent(gameObject.transform.parent);
-                        Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
-                        adhesinData.Cell1 = child1Data;
-                        adhesinData.Cell2 = otherCell;
-                        child1Data.AddAdhesin(adhesinData);
-                        otherCell.AddAdhesin(adhesinData);
-                    }
+                    alreadyexists = true;
+                    break;
                 }
             }
-
-            if (genome[cellMode].Child2KeepAdhesin)
-            {
-                foreach (Adhesin ad in adhesins)
-                {
-                    Cell otherCell = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
-                    bool alreadyexists = false;
-                    foreach (Adhesin child2Adhesin in child2Data.adhesins)
-                    {
-                        if (child2Adhesin.Cell1 == otherCell || child2Adhesin.Cell2 == otherCell)
-                        {
-                            alreadyexists = true;
-                            break;
-                        }
-                    }
-                    if (!alreadyexists)
-                    {
-                        GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
-                        adhesin.transform.SetParent(gameObject.transform.parent);
-                        Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
-                        adhesinData.Cell1 = child2Data;
-                        adhesinData.Cell2 = (ad.Cell1 != this) ? ad.Cell1 : ad.Cell2;
-                        child2Data.AddAdhesin(adhesinData);
-                        otherCell.AddAdhesin(adhesinData);
-                    }
-                }
-            }
-
-            if (genome[cellMode].MakeAdhesin)
+            if (!alreadyexists)
             {
                 GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
                 adhesin.transform.SetParent(gameObject.transform.parent);
                 Adhesin adhesinData = adhesin.GetComponent<Adhesin>();
-                adhesinData.Cell1 = child1Data;
-                adhesinData.Cell2 = child2Data;
-                child1Data.AddAdhesin(adhesinData);
-                child2Data.AddAdhesin(adhesinData);
+                adhesinData.Cell1 = child;
+                adhesinData.Cell2 = otherCell;
+                if (ad.Cell1 == this)
+                {
+                    adhesinData.Cell1AnchorPoint = ad.Cell1AnchorPoint.Rotate(-genome[cellMode].SplitAngle);
+                    adhesinData.Cell2AnchorPoint = ad.Cell2AnchorPoint;
+                }
+                else
+                {
+                    adhesinData.Cell1AnchorPoint = ad.Cell2AnchorPoint.Rotate(-genome[cellMode].SplitAngle);
+                    adhesinData.Cell1AnchorPoint = ad.Cell1AnchorPoint;
+                }
+                child.AddAdhesin(adhesinData);
+                otherCell.AddAdhesin(adhesinData);
             }
-
-            Alive = false;
-            Destroy(gameObject);
         }
     }
 

@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\InitInverted2DEdges.cs" />
     <Compile Include="Assets\Scripts\MouseControl.cs" />
     <Compile Include="Assets\Scripts\PrefabSupplier.cs" />
+    <Compile Include="Assets\Scripts\ShowGizmos.cs" />
     <Compile Include="Assets\Scripts\Substrate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

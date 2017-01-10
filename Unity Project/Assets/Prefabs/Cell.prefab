@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 50314752932220730}
   - component: {fileID: 114388940157845034}
   - component: {fileID: 114914867376791462}
+  - component: {fileID: 114186478147172460}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Cell
@@ -72,12 +73,23 @@ CircleCollider2D:
   m_GameObject: {fileID: 1675253672929656}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6a4d96188c6e44d40940bf2145346137, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114186478147172460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675253672929656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db46ef0d9c11ea4419e578c67add82bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114388940157845034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,20 +106,38 @@ MonoBehaviour:
     InitialModeIndex: 0
     modes:
     - Type: 0
-      SplitMass: 2.7
-      SplitAngle: 20
+      SplitMass: 3.5
+      SplitAngle: 120
       Child1ModeIndex: 0
-      Child2ModeIndex: 0
+      Child2ModeIndex: 1
       Color: {r: 0, g: 1, b: 0.25517225, a: 1}
-      MakeAdhesin: 0
+      MakeAdhesin: 1
       Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+    - Type: 0
+      SplitMass: Infinity
+      SplitAngle: 270
+      Child1ModeIndex: 2
+      Child2ModeIndex: 2
+      Color: {r: 0.94482756, g: 1, b: 0, a: 1}
+      MakeAdhesin: 0
+      Child1KeepAdhesin: 1
       Child2KeepAdhesin: 0
     - Type: 0
-      SplitMass: 2.1
+      SplitMass: Infinity
+      SplitAngle: 90
+      Child1ModeIndex: 3
+      Child2ModeIndex: 3
+      Color: {r: 1, g: 0.8482759, b: 0, a: 1}
+      MakeAdhesin: 0
+      Child1KeepAdhesin: 1
+      Child2KeepAdhesin: 0
+    - Type: 0
+      SplitMass: Infinity
       SplitAngle: 0
-      Child1ModeIndex: 1
-      Child2ModeIndex: 1
-      Color: {r: 1, g: 0, b: 0, a: 1}
+      Child1ModeIndex: 0
+      Child2ModeIndex: 0
+      Color: {r: 1, g: 0.39310342, b: 0, a: 1}
       MakeAdhesin: 0
       Child1KeepAdhesin: 0
       Child2KeepAdhesin: 0
