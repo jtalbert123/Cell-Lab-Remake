@@ -16,7 +16,7 @@ public class ShowGizmos : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, transform.localScale);
-        Gizmos.DrawRay(new Ray(transform.position, transform.rotation * Vector3.right));
+        //Gizmos.DrawWireCube(transform.position, transform.localScale);
+        Gizmos.DrawRay(transform.position, transform.rotation * Vector3.right);
     }
 }

@@ -7,7 +7,7 @@ public class Cell : MonoBehaviour {
 
     public float Mass = 3f;
     public Genome genome;
-    public int cellMode;
+    public int CellModeIndex;
 
     public bool Alive { get; set; }
 
@@ -24,7 +24,7 @@ public class Cell : MonoBehaviour {
         physics.mass = Mass;
         transform.localScale = new Vector3(1, 1, 1) * Mass / 4f;
         SpriteRenderer graphics = GetComponent<SpriteRenderer>();
-        graphics.color = genome[cellMode].Color;
+        graphics.color = genome[CellModeIndex].Color;
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class Cell : MonoBehaviour {
         }
         physics.mass = Mass;
         transform.localScale = new Vector3(1, 1, 1) * Radius;
-        if (Mass >= genome[cellMode].SplitMass)
+        if (Mass >= genome[CellModeIndex].SplitMass)
         {
             Split();
         }
@@ -64,8 +64,8 @@ public class Cell : MonoBehaviour {
 
         GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
         GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
-        child1.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
-        child2.transform.rotation *= Quaternion.Euler(0, 0, genome[cellMode].SplitAngle);
+        child1.transform.rotation *= Quaternion.Euler(0, 0, genome[CellModeIndex].SplitAngle + genome[CellModeIndex].Child1Angle);
+        child2.transform.rotation *= Quaternion.Euler(0, 0, genome[CellModeIndex].SplitAngle + genome[CellModeIndex].Child2Angle);
         Rigidbody2D child1physics = child1.GetComponent<Rigidbody2D>();
         Rigidbody2D child2physics = child2.GetComponent<Rigidbody2D>();
         Cell child1Data = child1.GetComponent<Cell>();
@@ -74,10 +74,10 @@ public class Cell : MonoBehaviour {
         child2Data.Mass = Mass / 2f;
         child1Data.genome = genome.Clone();
         child2Data.genome = genome.Clone();
-        child1Data.cellMode = genome[cellMode].Child1ModeIndex;
-        child2Data.cellMode = genome[cellMode].Child2ModeIndex;
+        child1Data.CellModeIndex = genome[CellModeIndex].Child1ModeIndex;
+        child2Data.CellModeIndex = genome[CellModeIndex].Child2ModeIndex;
 
-        Vector2 splitVelocity = new Vector2(-.3f, 0).Rotate(transform.eulerAngles.z + genome[cellMode].SplitAngle);
+        Vector2 splitVelocity = new Vector2(-.3f, 0).Rotate(transform.eulerAngles.z + genome[CellModeIndex].SplitAngle);
 
         child1physics.velocity = physics.velocity + splitVelocity;
         child2physics.velocity = physics.velocity - splitVelocity;
@@ -85,17 +85,17 @@ public class Cell : MonoBehaviour {
         //Component[] child1Components = child1.GetComponents<Component>();
         //Component[] child2Components = child2.GetComponents<Component>();
 
-        if (genome[cellMode].Child1KeepAdhesin)
+        if (genome[CellModeIndex].Child1KeepAdhesin)
         {
-            ReBuildAdhesins(child1Data);
+            ReBuildAdhesins(child1Data, genome[CellModeIndex].Child1Angle);
         }
 
-        if (genome[cellMode].Child2KeepAdhesin)
+        if (genome[CellModeIndex].Child2KeepAdhesin)
         {
-            ReBuildAdhesins(child2Data);
+            ReBuildAdhesins(child2Data, genome[CellModeIndex].Child2Angle);
         }
 
-        if (genome[cellMode].MakeAdhesin)
+        if (genome[CellModeIndex].MakeAdhesin)
         {
             GameObject adhesin = Instantiate(PrefabSupplier.AdhesinPrefabReference);
             adhesin.transform.SetParent(gameObject.transform.parent);
@@ -110,7 +110,7 @@ public class Cell : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    void ReBuildAdhesins(Cell child)
+    void ReBuildAdhesins(Cell child, float childAngle)
     {
         foreach (Adhesin ad in adhesins)
         {
@@ -133,12 +133,12 @@ public class Cell : MonoBehaviour {
                 adhesinData.Cell2 = otherCell;
                 if (ad.Cell1 == this)
                 {
-                    adhesinData.Cell1AnchorPoint = ad.Cell1AnchorPoint.Rotate(-genome[cellMode].SplitAngle);
+                    adhesinData.Cell1AnchorPoint = ad.Cell1AnchorPoint.Rotate(-genome[CellModeIndex].SplitAngle - childAngle);
                     adhesinData.Cell2AnchorPoint = ad.Cell2AnchorPoint;
                 }
                 else
                 {
-                    adhesinData.Cell1AnchorPoint = ad.Cell2AnchorPoint.Rotate(-genome[cellMode].SplitAngle);
+                    adhesinData.Cell1AnchorPoint = ad.Cell2AnchorPoint.Rotate(-genome[CellModeIndex].SplitAngle - childAngle);
                     adhesinData.Cell1AnchorPoint = ad.Cell1AnchorPoint;
                 }
                 child.AddAdhesin(adhesinData);

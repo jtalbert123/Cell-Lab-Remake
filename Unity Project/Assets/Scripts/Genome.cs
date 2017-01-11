@@ -59,14 +59,16 @@ public enum CellType
 public struct CellMode
 {
     public CellType Type;
+    public Color Color;
+    public bool MakeAdhesin;
     public float SplitMass;
     public float SplitAngle;
     public int Child1ModeIndex;
     public int Child2ModeIndex;
-    public Color Color;
-    public bool MakeAdhesin;
     public bool Child1KeepAdhesin;
     public bool Child2KeepAdhesin;
+    public float Child1Angle;
+    public float Child2Angle;
 
     public CellMode(int index)
     {
@@ -79,5 +81,7 @@ public struct CellMode
         MakeAdhesin = false;
         SplitMass = 2.54f;
         SplitAngle = 0f;
+        Child1Angle = 0f;
+        Child2Angle = 0f;
     }
 }

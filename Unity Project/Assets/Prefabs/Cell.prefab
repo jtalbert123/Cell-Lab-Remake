@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212435575498521532}
   - component: {fileID: 58278138569697454}
   - component: {fileID: 50314752932220730}
-  - component: {fileID: 114388940157845034}
   - component: {fileID: 114914867376791462}
   - component: {fileID: 114186478147172460}
+  - component: {fileID: 114371524277258274}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Cell
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db46ef0d9c11ea4419e578c67add82bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114388940157845034
+--- !u!114 &114371524277258274
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -101,47 +101,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26ea5ef86f67dd47adee63fb647a7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mass: 1.5
+  Mass: 1
   genome:
     InitialModeIndex: 0
     modes:
     - Type: 0
-      SplitMass: 3.5
-      SplitAngle: 120
-      Child1ModeIndex: 0
-      Child2ModeIndex: 1
-      Color: {r: 0, g: 1, b: 0.25517225, a: 1}
+      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
       MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 1
+      Child2ModeIndex: 4
       Child1KeepAdhesin: 0
       Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: -135
     - Type: 0
-      SplitMass: Infinity
-      SplitAngle: 270
+      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
       Child1ModeIndex: 2
-      Child2ModeIndex: 2
-      Color: {r: 0.94482756, g: 1, b: 0, a: 1}
-      MakeAdhesin: 0
-      Child1KeepAdhesin: 1
-      Child2KeepAdhesin: 0
+      Child2ModeIndex: 4
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: -135
     - Type: 0
-      SplitMass: Infinity
-      SplitAngle: 90
+      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
       Child1ModeIndex: 3
-      Child2ModeIndex: 3
-      Color: {r: 1, g: 0.8482759, b: 0, a: 1}
-      MakeAdhesin: 0
-      Child1KeepAdhesin: 1
-      Child2KeepAdhesin: 0
+      Child2ModeIndex: 4
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: 225
     - Type: 0
+      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
+      MakeAdhesin: 0
+      SplitMass: 2.54
+      SplitAngle: 180
+      Child1ModeIndex: 0
+      Child2ModeIndex: 4
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: 45
+    - Type: 0
+      Color: {r: 0.986207, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
       SplitMass: Infinity
       SplitAngle: 0
       Child1ModeIndex: 0
       Child2ModeIndex: 0
-      Color: {r: 1, g: 0.39310342, b: 0, a: 1}
-      MakeAdhesin: 0
       Child1KeepAdhesin: 0
       Child2KeepAdhesin: 0
-  cellMode: 0
+      Child1Angle: 0
+      Child2Angle: 0
+  CellModeIndex: 0
 --- !u!114 &114914867376791462
 MonoBehaviour:
   m_ObjectHideFlags: 1

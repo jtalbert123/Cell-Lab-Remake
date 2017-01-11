@@ -23,9 +23,9 @@ public class Substrate : MonoBehaviour {
             {
                 GameObject cell = Instantiate(PrefabReference);
                 Cell cellData = cell.GetComponent<Cell>();
-                cellData.cellMode = cellData.genome.InitialModeIndex;
+                cellData.CellModeIndex = cellData.genome.InitialModeIndex;
                 cell.transform.position = position;
-                cell.transform.SetParent(transform, false);
+                cell.transform.SetParent(transform.parent, false);
             }
         }
 	}
