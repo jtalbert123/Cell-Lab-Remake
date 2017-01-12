@@ -2,10 +2,10 @@ Mono path[0] = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample_Data/Man
 Mono path[1] = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample_Data/Mono'
 Mono config path = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample_Data/Mono/etc'
 PlayerConnection initialized from E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55199
-Multi-casting "[IP] 10.65.215.9 [Port] 55199 [Flags] 2 [Guid] 257424046 [EditorId] 1826591914 [Version] 1048832 [Id] WindowsPlayer(Talonj123) [Debug] 0" to [225.0.0.222:54997]...
-Started listening to [0.0.0.0:55199]
-PlayerConnection already initialized - listening to [0.0.0.0:55199]
+PlayerConnection initialized network socket : 0.0.0.0 55128
+Multi-casting "[IP] 10.27.6.198 [Port] 55128 [Flags] 2 [Guid] 2228315764 [EditorId] 1826591914 [Version] 1048832 [Id] WindowsPlayer(Talonj123) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55128]
+PlayerConnection already initialized - listening to [0.0.0.0:55128]
 Initialize engine version: 5.5.0f3 (38b4efef76f0)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -27,13 +27,13 @@ Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\
 Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
 Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
 Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
-- Completed reload, in  0.153 seconds
+- Completed reload, in  0.856 seconds
 Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.054763 ms
+UnloadTime: 47.738628 ms
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 3630 -> priority: 1 
+  Thread -> id: 2808 -> priority: 1 

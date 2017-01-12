@@ -33,12 +33,12 @@ public class Cell : MonoBehaviour {
 
         if (Mass < 3.6f)
         {
-            Mass += 1.28f * Time.deltaTime;
+            //Mass += 1.28f * Time.deltaTime;
 
-            //// linear + radius
-            //float linear = 0.08f * transform.position.y * Time.deltaTime;
-            //float radial = 0.15f * transform.position.magnitude * Time.deltaTime;
-            //Mass += linear + radial;
+            // linear + radius
+            float linear = 0.08f * transform.position.y * Time.deltaTime;
+            float radial = 0.15f * transform.position.magnitude * Time.deltaTime;
+            Mass += linear + radial;
         }
         if (Mass < 0.6f)
         {

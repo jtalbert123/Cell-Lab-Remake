@@ -29,9 +29,4 @@ public class InitBoxRingCollider : MonoBehaviour {
             target.SetPath(index + i, new Vector2[] { highOutside, highInside, lowInside, lowOutside });
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

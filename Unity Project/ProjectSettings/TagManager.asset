@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Cell
   - Substrate
+  - Microscope
+  - Genome Editor
   layers:
   - Default
   - TransparentFX

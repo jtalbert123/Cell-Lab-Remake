@@ -103,59 +103,125 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mass: 1
   genome:
-    InitialModeIndex: 0
+    InitialModeIndex: 1
     modes:
     - Type: 0
-      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
-      MakeAdhesin: 1
-      SplitMass: 2.54
-      SplitAngle: 0
-      Child1ModeIndex: 1
-      Child2ModeIndex: 4
-      Child1KeepAdhesin: 0
-      Child2KeepAdhesin: 1
-      Child1Angle: 90
-      Child2Angle: -135
-    - Type: 0
-      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
-      MakeAdhesin: 1
-      SplitMass: 2.54
-      SplitAngle: 0
-      Child1ModeIndex: 2
-      Child2ModeIndex: 4
-      Child1KeepAdhesin: 0
-      Child2KeepAdhesin: 1
-      Child1Angle: 90
-      Child2Angle: -135
-    - Type: 0
-      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
-      MakeAdhesin: 1
-      SplitMass: 2.54
-      SplitAngle: 0
-      Child1ModeIndex: 3
-      Child2ModeIndex: 4
-      Child1KeepAdhesin: 0
-      Child2KeepAdhesin: 1
-      Child1Angle: 90
-      Child2Angle: 225
-    - Type: 0
-      Color: {r: 0.07586217, g: 1, b: 0, a: 1}
+      Color: {r: 0.90344834, g: 1, b: 0, a: 1}
       MakeAdhesin: 0
-      SplitMass: 2.54
-      SplitAngle: 180
-      Child1ModeIndex: 0
-      Child2ModeIndex: 4
-      Child1KeepAdhesin: 0
-      Child2KeepAdhesin: 1
-      Child1Angle: 90
-      Child2Angle: 45
-    - Type: 0
-      Color: {r: 0.986207, g: 1, b: 0, a: 1}
-      MakeAdhesin: 1
       SplitMass: Infinity
       SplitAngle: 0
       Child1ModeIndex: 0
       Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 0
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 2
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 3
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 4
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 90
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 5
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 6
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: -90
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 7
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: -90
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 8
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 1
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 9
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 0.034482718, g: 1, b: 0, a: 1}
+      MakeAdhesin: 0
+      SplitMass: 2.54
+      SplitAngle: 0
+      Child1ModeIndex: 1
+      Child2ModeIndex: 0
+      Child1KeepAdhesin: 0
+      Child2KeepAdhesin: 1
+      Child1Angle: 0
+      Child2Angle: 0
+    - Type: 0
+      Color: {r: 1, g: 0, b: 0, a: 1}
+      MakeAdhesin: 0
+      SplitMass: 2.54
+      SplitAngle: 30
+      Child1ModeIndex: 10
+      Child2ModeIndex: 10
       Child1KeepAdhesin: 0
       Child2KeepAdhesin: 0
       Child1Angle: 0

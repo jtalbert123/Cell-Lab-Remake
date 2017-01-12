@@ -24,6 +24,16 @@ public struct Genome
         genome.AddMode(mode1);
     }
 
+    public Genome(int count)
+    {
+        InitialModeIndex = 0;
+        modes = new CellMode[count];
+        for (int i = 0; i < count; i++)
+        {
+            modes[i] = new CellMode(i);
+        }
+    }
+
     public Genome Clone()
     {
         Genome other = new Genome();

@@ -81,8 +81,8 @@ public class Adhesin : MonoBehaviour {
 
         spring.enableCollision = true;
         spring.distance = 0;
-        spring.frequency = 1;
-        spring.dampingRatio = 1;
+        spring.frequency = 3;
+        spring.dampingRatio = 1f;
         spring.autoConfigureDistance = false;
         spring.autoConfigureConnectedAnchor = false;
 
