@@ -78,9 +78,12 @@
     <Compile Include="Assets\Scripts\ContextManager.cs" />
     <Compile Include="Assets\Scripts\DontGoThroughThings.cs" />
     <Compile Include="Assets\Scripts\Genome.cs" />
+    <Compile Include="Assets\Scripts\GenomeEditor\CellColor.cs" />
     <Compile Include="Assets\Scripts\GenomeEditor\CellModeSelector.cs" />
     <Compile Include="Assets\Scripts\GenomeEditor\ChildModeSelector.cs" />
+    <Compile Include="Assets\Scripts\GenomeEditor\ColorSlider.cs" />
     <Compile Include="Assets\Scripts\GenomeEditor\GenomeEditor.cs" />
+    <Compile Include="Assets\Scripts\GenomeEditor\KeepAdhesinCheckbox.cs" />
     <Compile Include="Assets\Scripts\GenomeEditor\MakeAdhesinCheckbox.cs" />
     <Compile Include="Assets\Scripts\GenomeEditor\UpdateGenomeEditorCurrentModeWithDropdown.cs" />
     <Compile Include="Assets\Scripts\InitBoxRingCollider.cs" />

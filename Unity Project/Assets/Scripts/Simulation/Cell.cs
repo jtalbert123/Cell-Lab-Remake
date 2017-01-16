@@ -61,7 +61,6 @@ public class Cell : MonoBehaviour {
             return;
         }
 
-
         GameObject child1 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
         GameObject child2 = Instantiate(PrefabSupplier.CellPrefabReference, transform.position, transform.rotation, transform.parent);
         child1.transform.rotation *= Quaternion.Euler(0, 0, genome[CellModeIndex].SplitAngle + genome[CellModeIndex].Child1Angle);

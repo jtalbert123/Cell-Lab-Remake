@@ -18,11 +18,15 @@ public class ChildModeSelector : MonoBehaviour {
 
     private Dropdown dropdown;
 
+    private void Awake()
+    {
+        editor = GetComponentInParent<GenomeEditor>();
+        dropdown = GetComponentInChildren<Dropdown>();
+    }
+
     // Use this for initialization
     void Start () {
         textObject.text = "Child " + (int)child + ":";
-        editor = GetComponentInParent<GenomeEditor>();
-        dropdown = GetComponentInChildren<Dropdown>();
     }
 
     public void EditModeChanged()

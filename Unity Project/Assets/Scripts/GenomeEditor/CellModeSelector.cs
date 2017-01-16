@@ -8,12 +8,18 @@ public class CellModeSelector : MonoBehaviour {
     private Dropdown dropdown;
     private GenomeEditor editor;
 
-    // Use this for initialization
-    void Start () {
+    private void Awake()
+    {
         dropdown = GetComponent<Dropdown>();
         editor = GetComponentInParent<GenomeEditor>();
+    }
 
+    // Use this for initialization
+    void Start ()
+    {
         GenomeModesChanged();
+        dropdown.value = 1;
+        dropdown.value = 0;
     }
 	
 	// Update is called once per frame

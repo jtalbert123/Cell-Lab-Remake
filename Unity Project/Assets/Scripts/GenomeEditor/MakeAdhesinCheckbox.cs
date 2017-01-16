@@ -8,12 +8,17 @@ public class MakeAdhesinCheckbox : MonoBehaviour {
     private GenomeEditor editor;
 
     private Toggle toggle;
+    private bool SavedState;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         editor = GetComponentInParent<GenomeEditor>();
         toggle = GetComponent<Toggle>();
+    }
+
+    private void Start()
+    {
     }
 
     public void EditModeChanged()

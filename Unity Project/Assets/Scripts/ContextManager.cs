@@ -16,19 +16,16 @@ public class ContextManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.G) && !GenomeEditor.Active)
         {
-            if (Microscope.Active)
-            {
                 Microscope.Active = false;
                 GenomeEditor.Active = true;
-            }
-            else
-            {
-                Microscope.Active = true;
-                GenomeEditor.Active = false;
-                Microscope.CurrentGenome = GenomeEditor.CurrentGenome;
-            }
+        }
+        else if (Input.GetKeyDown(KeyCode.M) && !Microscope.Active)
+        {
+            Microscope.Active = true;
+            GenomeEditor.Active = false;
+            Microscope.CurrentGenome = GenomeEditor.CurrentGenome;
         }
 	}
 }

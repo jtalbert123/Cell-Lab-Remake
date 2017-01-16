@@ -10,7 +10,7 @@ public class UpdateGenomeEditorCurrentModeWithDropdown : MonoBehaviour {
     private Dropdown dropdown;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         editor = GetComponentInParent<GenomeEditor>();
         dropdown = GetComponent<Dropdown>();
