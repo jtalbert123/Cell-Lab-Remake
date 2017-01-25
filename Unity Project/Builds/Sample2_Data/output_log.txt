@@ -1,0 +1,39 @@
+Mono path[0] = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample2_Data/Managed'
+Mono path[1] = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample2_Data/Mono'
+Mono config path = 'E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample2_Data/Mono/etc'
+PlayerConnection initialized from E:/Projects/Cell-Lab-Remake/Unity Project/Builds/Sample2_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55297
+Multi-casting "[IP] 192.168.0.105 [Port] 55297 [Flags] 2 [Guid] 1075338831 [EditorId] 1316816756 [Version] 1048832 [Id] WindowsPlayer(Talonj123) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55297]
+PlayerConnection already initialized - listening to [0.0.0.0:55297]
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 8790M (ID=0x6606)
+    Vendor:   ATI
+    VRAM:     2027 MB
+    Driver:   20.19.15.4531
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.152 seconds
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: E:\Projects\Cell-Lab-Remake\Unity Project\Builds\Sample2_Data\Managed\System.dll (this message is harmless)
+desktop: 1680x1050 59Hz; virtual: 6160x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.130375 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: fc4 -> priority: 1 

@@ -16,7 +16,7 @@ public class UpdateGenomeEditorCurrentModeWithDropdown : MonoBehaviour {
         dropdown = GetComponent<Dropdown>();
     }
 
-    public void SelectedModeChanged(int mode)
+    public void SelectedModeChanged()
     {
         editor.CurrentMode = dropdown.value;
     }

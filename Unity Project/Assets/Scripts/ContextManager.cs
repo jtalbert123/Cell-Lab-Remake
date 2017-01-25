@@ -25,7 +25,7 @@ public class ContextManager : MonoBehaviour {
         {
             Microscope.Active = true;
             GenomeEditor.Active = false;
-            Microscope.CurrentGenome = GenomeEditor.CurrentGenome;
+            Microscope.CurrentGenome = GenomeEditor.CurrentGenome.Clone();
         }
 	}
 }

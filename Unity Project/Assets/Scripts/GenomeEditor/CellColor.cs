@@ -50,7 +50,6 @@ public class CellColor : MonoBehaviour {
     public void OnSliderValueChanged(float value)
     {
         editor.CurrentGenome.modes[editor.CurrentMode].Color = Color;
-        print("Cell Color Changed, updating...");
 
         if (OnValueChanged != null)
         {
